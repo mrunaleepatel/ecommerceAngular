@@ -6,6 +6,15 @@ import { ProductService } from './_services/product.service';
 import { ImageProcessingService } from './image-processing.service'
 import { map } from 'rxjs/operators';
 
+export interface Product {
+  productId?: number; // Make productId optional
+  productName: string;
+  productDescription: string;
+  productDiscountedPrice: number;
+  productActualPrice: number;
+  productImages: any[]; // Adjust this to the correct type if needed
+}
+
 @Injectable({
   providedIn: "root",
 })

@@ -31,7 +31,7 @@ export class ShowProductDetailsComponent implements OnInit {
   }
 
   searchByKeyword(searchkeyword) {
-    console.log(searchkeyword);
+    console.log(searchkeyword); 
     this.pageNumber = 0;
     this.productDetails = [];
     this.getAllProducts(searchkeyword);
@@ -68,7 +68,7 @@ export class ShowProductDetailsComponent implements OnInit {
     this.getAllProducts();
   }
 
-  deleteProduct(productId) {
+  deleteProduct(productId: Number) {
     this.productService.deleteProduct(productId).subscribe(
       (resp) => {
         this.getAllProducts();
@@ -90,7 +90,7 @@ export class ShowProductDetailsComponent implements OnInit {
     });
   }
 
-  editProductDetails(productId) {
+  editProductDetails(productId: number)  {
     this.router.navigate(['/addNewProduct', {productId: productId}]);
   }
 }

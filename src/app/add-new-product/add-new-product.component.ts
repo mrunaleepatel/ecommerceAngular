@@ -6,6 +6,7 @@ import { ActivatedRoute } from "@angular/router";
 import { FileHandle } from "../_model/file-handle.model";
 import { Product } from "../_model/product.model";
 import { ProductService } from "../_services/product.service";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: "app-add-new-product",
@@ -13,10 +14,11 @@ import { ProductService } from "../_services/product.service";
   styleUrls: ["./add-new-product.component.css"],
 })
 export class AddNewProductComponent implements OnInit {
+
   isNewProduct = true;
 
   product: Product = {
-    productId: null,
+    productId: 0,
     productName: "",
     productDescription: "",
     productDiscountedPrice: 0,
