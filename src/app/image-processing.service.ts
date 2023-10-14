@@ -35,7 +35,7 @@ export class ImageProcessingService {
 
   }
 
-  public dataURItoBlob(picBytes, imageType) {
+  public dataURItoBlob(picBytes: string, imageType: string) {
     const byteString = window.atob(picBytes);
     const arrayBuffer = new ArrayBuffer(byteString.length);
     const int8Array = new Uint8Array(arrayBuffer);

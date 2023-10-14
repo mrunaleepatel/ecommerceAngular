@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../_services/product.service';
+import { MyOrderDetails } from '../_model/order.model';
 
 @Component({
   selector: 'app-order-details',
@@ -7,9 +8,8 @@ import { ProductService } from '../_services/product.service';
   styleUrls: ['./order-details.component.css']
 })
 export class OrderDetailsComponent implements OnInit {
-
   displayedColumns: string[] = ['Id', 'Product Name', 'Name', 'Address', 'Contact No.', 'Status', 'Action'];
-  dataSource = [];
+  dataSource: MyOrderDetails[] = []; // Specify the type as MyOrderDetails[]
 
   status: string = 'All';
 
@@ -21,7 +21,7 @@ export class OrderDetailsComponent implements OnInit {
 
   getAllOrderDetailsForAdmin(statusParameter: string) {
     this.productService.getAllOrderDetailsForAdmin(statusParameter).subscribe(
-      (resp) => {
+      (resp: MyOrderDetails[]) => { // Specify the type as MyOrderDetails[]
         this.dataSource = resp;
         console.log(resp);
       }, (error) => {
@@ -30,7 +30,7 @@ export class OrderDetailsComponent implements OnInit {
     );
   }
 
-  markAsDelivered(orderId) {
+  markAsDelivered(orderId: string) { // Specify the type as number
     console.log(orderId);
     this.productService.markAsDelivered(orderId).subscribe(
       (response) => {
@@ -41,5 +41,4 @@ export class OrderDetailsComponent implements OnInit {
       }
     );
   }
-
 }

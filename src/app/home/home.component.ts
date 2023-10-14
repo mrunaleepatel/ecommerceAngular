@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 
   pageNumber: number = 0;
 
-  productDetails = [];
+  productDetails: Product[] = [];
 
   showLoadButton = false;
 
@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
     this.getAllProducts();
   }
 
-  searchByKeyword(searchkeyword) {
+  searchByKeyword(searchkeyword: string) {
     console.log(searchkeyword);
     this.pageNumber = 0;
     this.productDetails = [];
@@ -36,22 +36,29 @@ export class HomeComponent implements OnInit {
 
   public getAllProducts(searchKey: string = "") {
     this.productService.getAllProducts(this.pageNumber, searchKey)
-    .pipe(
-      map((x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product)))
-    )
-    .subscribe(
-      (resp: Product[]) => {
-        console.log(resp);
-        if(resp.length == 12) {
-          this.showLoadButton = true;
-        } else {
-          this.showLoadButton = false;
+      .pipe(
+        map((x: Product[] | undefined) => {
+          if (x) {
+            return x.map((product: Product) => this.imageProcessingService.createImages(product));
+          } else {
+            return [];
+          }
+        })
+      )
+      .subscribe(
+        (resp: Product[]) => {
+          console.log(resp);
+          if (resp.length === 12) {
+            this.showLoadButton = true;
+          } else {
+            this.showLoadButton = false;
+          }
+          this.productDetails.push(...resp);
+        },
+        (error: HttpErrorResponse) => {
+          console.log(error);
         }
-        resp.forEach(p => this.productDetails.push(p));
-      }, (error: HttpErrorResponse) => {
-        console.log(error);
-      }
-    );
+      );
   }
 
   public loadMoreProduct() {
@@ -59,7 +66,7 @@ export class HomeComponent implements OnInit {
     this.getAllProducts();
   }
 
-  showProductDetails(productId) {
+  showProductDetails(productId: number) {
     this.router.navigate(['/productViewDetails', {productId: productId}]);
   }
 }

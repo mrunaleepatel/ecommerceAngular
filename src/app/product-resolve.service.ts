@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { Product } from './_model/product.model';
 import { ProductService } from './_services/product.service';
 import { ImageProcessingService } from './image-processing.service'
 import { map } from 'rxjs/operators';
 
 export interface Product {
-  productId?: number; // Make productId optional
+  productId?: number | null; // Make productId optional
   productName: string;
   productDescription: string;
   productDiscountedPrice: number;
@@ -40,14 +39,14 @@ export class ProductResolveService implements Resolve<Product> {
     }
   }
 
-  getProductDetails() {
+  getProductDetails(): Product {
     return {
-      productId:null,
-      productName: "",
-      productDescription: "",
-      productDiscountedPrice: 0,
-      productActualPrice: 0,
-      productImages: [],
+      productId: null,
+productName: '',
+productDescription: '',
+productDiscountedPrice: 0,
+productActualPrice: 0,
+productImages: [],
     };
   }
 }

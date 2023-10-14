@@ -33,14 +33,18 @@ export class DragDirective {
     evt.stopPropagation();
     this.background = "#eee";
 
-    let fileHandle: FileHandle = null;
+    let fileHandle: FileHandle;
 
+    if(evt.dataTransfer) {
     const file = evt.dataTransfer.files[0];
+    if (file) {
     const url = this.sanitizer.bypassSecurityTrustUrl(
       window.URL.createObjectURL(file)
     );
 
     fileHandle = { file, url };
     this.files.emit(fileHandle);
+  }
+}
   }
 }

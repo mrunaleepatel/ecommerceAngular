@@ -22,7 +22,9 @@ export class BuyProductResolverService implements Resolve<Product[]>{
     
     const id = route.paramMap.get("id");
     const isSingleProductCheckout = route.paramMap.get("isSingleProductCheckout");
-    return this.productServcice.getProductDetails(isSingleProductCheckout, id)
+    const isSingleProductCheckoutBool = isSingleProductCheckout === 'true';
+    const idNumber = id ? parseInt(id, 10): 0;
+    return this.productServcice.getProductDetails(isSingleProductCheckoutBool, idNumber)
       .pipe(
         map(
           (x: Product[], i) => x.map((product: Product) => this.imageProcessingService.createImages(product))

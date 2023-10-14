@@ -33,8 +33,9 @@ export class BuyProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.productDetails = this.activatedRoute.snapshot.data['productDetails'];
-    this.isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
+    const isSingleProductCheckout = this.activatedRoute.snapshot.paramMap.get("isSingleProductCheckout");
     
+    this.isSingleProductCheckout = isSingleProductCheckout || '';
     this.productDetails.forEach(
       x => this.orderDetails.orderProductQuantityList.push(
         {productId: x.productId, quantity: 1}
@@ -46,7 +47,8 @@ export class BuyProductComponent implements OnInit {
   }
 
   public placeOrder(orderForm: NgForm) {
-    this.productService.placeOrder(this.orderDetails, this.isSingleProductCheckout).subscribe(
+    const isSingleProductCheckoutBool = this.isSingleProductCheckout === 'true';
+    this.productService.placeOrder(this.orderDetails, isSingleProductCheckoutBool).subscribe(
       (resp) => {
         console.log(resp);
         orderForm.reset();
@@ -65,7 +67,7 @@ export class BuyProductComponent implements OnInit {
   }
 
 
-  getQuantityForProduct(productId) {
+  getQuantityForProduct(productId: number) {
     const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
       (productQuantity) => productQuantity.productId === productId
     );
@@ -73,7 +75,7 @@ export class BuyProductComponent implements OnInit {
     return filteredProduct[0].quantity;
   }
 
-  getCalculatedTotal(productId, productDiscountedPrice) {
+  getCalculatedTotal(productId: number, productDiscountedPrice: number) {
     const filteredProduct = this.orderDetails.orderProductQuantityList.filter(
       (productQuantity) => productQuantity.productId === productId
     );
@@ -81,7 +83,7 @@ export class BuyProductComponent implements OnInit {
     return filteredProduct[0].quantity * productDiscountedPrice;
   }
 
-  onQuantityChanged(q, productId) {
+  onQuantityChanged(q: number, productId: number) {
     this.orderDetails.orderProductQuantityList.filter(
       (orderProduct) => orderProduct.productId === productId
     )[0].quantity = q;

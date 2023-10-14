@@ -30,7 +30,7 @@ export class ShowProductDetailsComponent implements OnInit {
     this.getAllProducts();
   }
 
-  searchByKeyword(searchkeyword) {
+  searchByKeyword(searchkeyword: string) {
     console.log(searchkeyword); 
     this.pageNumber = 0;
     this.productDetails = [];
@@ -68,7 +68,7 @@ export class ShowProductDetailsComponent implements OnInit {
     this.getAllProducts();
   }
 
-  deleteProduct(productId: Number) {
+  deleteProduct(productId: number) {
     this.productService.deleteProduct(productId).subscribe(
       (resp) => {
         this.getAllProducts();

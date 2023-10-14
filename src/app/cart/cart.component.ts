@@ -2,6 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../_services/product.service';
 
+interface CartItem {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -20,7 +26,7 @@ export class CartComponent implements OnInit {
     this.getCartDetails();
   }
 
-  delete(cartId) {
+  delete(cartId: string) {
     console.log(cartId);
     this.productService.deleteCartItem(cartId).subscribe(
       (resp) => {
@@ -34,7 +40,7 @@ export class CartComponent implements OnInit {
 
   getCartDetails() {
     this.productService.getCartDetails().subscribe(
-      (response:any[]) => {
+      (response: CartItem[]) => {
         console.log(response);
         this.cartDetails = response;
       },
@@ -50,12 +56,12 @@ export class CartComponent implements OnInit {
       isSingleProductCheckout: false, id: 0
     }]);
 
-    // this.productService.getProductDetails(false, 0).subscribe(
-    //   (resp) => {
-    //     console.log(resp);
-    //   }, (err) => {
-    //     console.log(err);
-    //   }
-    // );
+    this.productService.getProductDetails(false, 0).subscribe(
+      (resp) => {
+        console.log(resp);
+      }, (err) => {
+        console.log(err);
+      }
+    );
   }
 }

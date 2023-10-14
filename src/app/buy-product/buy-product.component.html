@@ -66,8 +66,8 @@
                                 <select 
                                 #quantity
                                 class="form-select"
-                                [ngModel]="getQuantityForProduct(product.productId)"
-                                (change)="onQuantityChanged(quantity.value, product.productId)"
+                                [ngModel]="getQuantityForProduct(+product.productId)"
+                                (change)="onQuantityChanged(+quantity.value, +product.productId)"
                                 >
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -75,7 +75,7 @@
                                 </select>
                             </td>
                             <td>
-                                {{getCalculatedTotal(product.productId, product.productDiscountedPrice)}}
+                                {{getCalculatedTotal(+product.productId, product.productDiscountedPrice)}}
                             </td>
                         </tr>
 

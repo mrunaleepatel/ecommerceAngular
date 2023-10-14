@@ -5,6 +5,13 @@ import { OrderDetails } from '../_model/order-details.model';
 import { MyOrderDetails } from '../_model/order.model';
 import { Product } from '../_model/product.model';
 
+export interface CartItem {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,11 +19,11 @@ export class ProductService {
 
   constructor(private httpClient: HttpClient) { }
 
-  public createTransaction(amount) {
+  public createTransaction(amount: number) {
     return this.httpClient.get("http://localhost:9090/createTransaction/"+amount);
   }
 
-  public markAsDelivered(orderId) {
+  public markAsDelivered(orderId: string) {
       return this.httpClient.get("http://localhost:9090/markOrderAsDelivered/"+orderId)
   }
 
@@ -28,7 +35,7 @@ export class ProductService {
     return this.httpClient.get<MyOrderDetails[]>("http://localhost:9090/getOrderDetails");
   }
 
-  public deleteCartItem(cartId) {
+  public deleteCartItem(cartId: string) {
     return this.httpClient.delete("http://localhost:9090/deleteCartItem/"+cartId);
   }
 
@@ -36,11 +43,11 @@ export class ProductService {
     return this.httpClient.post<Product>("http://localhost:9090/addNewProduct", product);
   }
 
-  public getAllProducts(pageNumber, searchKeyword: string = "") {
+  public getAllProducts(pageNumber: number, searchKeyword: string = "") {
     return this.httpClient.get<Product[]>("http://localhost:9090/getAllProducts?pageNumber="+pageNumber+"&searchKey="+searchKeyword);
   }
 
-  public getProductDetailsById(productId) {
+  public getProductDetailsById(productId: string) {
     return this.httpClient.get<Product>("http://localhost:9090/getProductDetailsById/"+productId);
   }
 
@@ -48,19 +55,19 @@ export class ProductService {
     return this.httpClient.delete("http://localhost:9090/deleteProductDetails/"+productId);
   }
 
-  public getProductDetails(isSingleProductCheckout, productId) {
+  public getProductDetails(isSingleProductCheckout: boolean, productId: string | number) {
     return this.httpClient.get<Product[]>("http://localhost:9090/getProductDetails/"+isSingleProductCheckout+"/"+productId);
   }
 
-  public placeOrder(orderDetails: OrderDetails, isCartCheckout) {
+  public placeOrder(orderDetails: OrderDetails, isCartCheckout: boolean) {
     return this.httpClient.post("http://localhost:9090/placeOrder/"+isCartCheckout, orderDetails);
   }
 
-  public addToCart(productId) {
+  public addToCart(productId: string) {
     return this.httpClient.get("http://localhost:9090/addToCart/"+productId);
   }
 
-  public getCartDetails() {
-    return this.httpClient.get("http://localhost:9090/getCartDetails");
+  public getCartDetails(): Observable<CartItem[]> {
+    return this.httpClient.get<CartItem[]>("http://localhost:9090/getCartDetails");
   }
 }
