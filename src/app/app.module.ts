@@ -22,7 +22,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AddNewProductComponent } from './add-new-product/add-new-product.component';
-import { MatGridListModule } from '@angular/material/grid-list';
 import { DragDirective } from './drag.directive';
 import { ShowProductDetailsComponent } from './show-product-details/show-product-details.component';
 import { MatTableModule } from '@angular/material/table';
@@ -36,7 +35,7 @@ import { CartComponent } from './cart/cart.component';
 import { MyOrdersComponent } from './my-orders/my-orders.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -56,7 +55,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     RegisterComponent,
     CartComponent,
     MyOrdersComponent,
-    OrderDetailsComponent
+    OrderDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,18 +72,18 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     MatTableModule,
     MatIconModule,
     MatDialogModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
   ],
   providers: [
     AuthGuard,
     {
       provide: HTTP_INTERCEPTORS,
-      useClass:AuthInterceptor,
-      multi:true
+      useClass: AuthInterceptor,
+      multi: true,
     },
-    UserService
+    UserService,
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AppModule { }
+export class AppModule {}
